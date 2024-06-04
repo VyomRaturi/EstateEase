@@ -55,4 +55,11 @@ contract Escrow {
         escrowAmount[_nftID] = _escrowAmount;
         buyer[_nftID] = _buyer;
     }
+
+    function depositEarnest(uint256 _nftID) public payable onlyBuyer(_nftID) {
+        require(
+            msg.value == escrowAmount[_nftID],
+            "Deposit amount should be equal to escrow amount"
+        );
+    }
 }
