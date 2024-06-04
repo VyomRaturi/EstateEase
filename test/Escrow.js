@@ -31,6 +31,14 @@ describe('Escrow', () => {
     );
 
     await escrow.deployed();
+
+    // Approve
+    transaction = await realEstate.connect(seller).approve(escrow.address, 1);
+    await transaction.wait();
+
+    // List
+    transaction = await escrow.connect(seller).list(1);
+    await transaction.wait();
   });
 
   describe('Deployment', async () => {
@@ -55,7 +63,14 @@ describe('Escrow', () => {
       expect(result).to.equal(lender.address);
     });
   });
-});
 
+  describe('listing', async () => {
+
+    it('Updates ownership', async () => {
+      expect(await realEstate.ownerOf(1)).to.equal(escrow.address);
+    }
+    );
+  });
+});
 
 // https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS
