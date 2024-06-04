@@ -62,4 +62,10 @@ contract Escrow {
             "Deposit amount should be equal to escrow amount"
         );
     }
+
+    receive() external payable {}
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
 }

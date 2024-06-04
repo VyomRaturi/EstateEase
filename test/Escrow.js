@@ -90,6 +90,15 @@ describe('Escrow', () => {
       expect(result).to.equal(tokens(5));
     });
   });
+
+  describe('Deposits', async () => {
+    it('Updates contract balance', async () => {
+      const transaction = await escrow.connect(buyer).depositEarnest(1, { value: tokens(5) });
+      await transaction.wait();
+      const result = await escrow.getBalance();
+      expect(result).to.equal(tokens(5));
+    });
+  });
 });
 
 // https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS
