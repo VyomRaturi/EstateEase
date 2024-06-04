@@ -89,4 +89,27 @@ contract Escrow {
     function getBalance() public view returns (uint256) {
         return address(this).balance;
     }
+
+    function finalizeSale(uint256 _nftID) public {
+        require(
+            inspectionPassed[_nftID] == true,
+            "Inspection should be passed"
+        );
+        require(
+            approval[_nftID][buyer[_nftID]] == true,
+            "Buyer should approve the sale"
+        );
+        require(
+            approval[_nftID][lender] == true,
+            "Lender should approve the sale"
+        );
+        require(
+            approval[_nftID][seller] == true,
+            "Seller should approve the sale"
+        );
+        require(
+            address(this).balance >= purchasePrice[_nftID],
+            "Insufficient balance"
+        );
+    }
 }
