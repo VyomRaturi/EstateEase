@@ -99,6 +99,15 @@ describe('Escrow', () => {
       expect(result).to.equal(tokens(5));
     });
   });
+
+  describe('inspection', async () => {
+    it('Updates inspection status', async () => {
+      const transaction = await escrow.connect(inspector).updateInspectionStatus(1, true);
+      await transaction.wait();
+      const result = await escrow.inspectionPassed(1);
+      expect(result).to.equal(true);
+    });
+  });
 });
 
 // https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS
